@@ -136,3 +136,25 @@ service_type = <none>
 # A qualified name for an introspection class, which will
 # be used by tests as ``.introspection``
 introspection = <none>
+
+
+
+[debug]
+
+# This section describes debugging mode.
+
+flag = False
+# Establish if debugging mode is enabled or not.
+# Possible values: True or False
+
+ip = 127.0.0.1
+# The ip on which both the Listener and the Client shoud use.
+# Usually localhost. Depending where you are running it this
+# might need to or should be changed.
+
+port = 6000
+# The port used for communication. Any empty port it's ok.
+
+authkey  = Passw0rd
+# The key requiered for authentication.
+

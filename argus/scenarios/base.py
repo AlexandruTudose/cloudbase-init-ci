@@ -154,6 +154,7 @@ class BaseScenario(unittest.TestCase):
             raise
 
     @classmethod
+    @util.DEBUG.wait
     def prepare_instance(cls):
         """Prepare the underlying instance."""
         # pylint: disable=not-callable
@@ -179,5 +180,6 @@ class BaseScenario(unittest.TestCase):
         This usually means that any resource that was created in
         :meth:`setUpClass` needs to be destroyed here.
         """
+        util.DEBUG.pause('You are before backend cleanup!')
         if cls.backend:
             cls.backend.cleanup()

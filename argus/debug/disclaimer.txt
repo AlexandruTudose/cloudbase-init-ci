@@ -1,0 +1,13 @@
+
+    ##########################################################################
+    ############                                                 #############
+    ############   WARNING!!! ARGUS is running in debug mode!!   #############
+    ############                                                 #############
+    ##########################################################################
+    ####                                                                  ####
+    ####   This should not be used in production. If you don't know what  ####
+    #### are you doing please stop and change the value for debug flag in ####
+    #### argus.conf to False. Otherwise use it on your own risk!!!        ####
+    ####                                                                  ####
+    ##########################################################################
+

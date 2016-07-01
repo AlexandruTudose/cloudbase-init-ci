@@ -20,6 +20,8 @@ import six
 
 
 _SENTINEL = object()
+BOOL = 'bool'
+INT = 'int'
 
 
 class _ConfigParser(six.moves.configparser.ConfigParser):
@@ -34,9 +36,14 @@ class _ConfigParser(six.moves.configparser.ConfigParser):
     optionxform = str
 
 
-def _get_default(parser, section, option, default=None):
+def _get_default(parser, section, option, default=None, parser_type=None):
     try:
-        return parser.get(section, option)
+        if parser_type == BOOL:
+            return parser.getboolean(section, option)
+        elif parser_type == INT:
+            return parser.getint(section, option)
+        else:
+            return parser.get(section, option)
     except six.moves.configparser.NoOptionError:
         return default
 
@@ -109,7 +116,19 @@ class ConfigurationParser(object):
                          image_password, image_os_type, require_sysprep)
 
     @property
+    def debug(self):
+        debug = collections.namedtuple(
+            'debug',
+            'flag ip port authkey')
+        flag = _get_default(self._parser, 'debug', 'flag', False, BOOL)
+        ip = _get_default(self._parser, 'debug', 'ip', '127.0.0.1')
+        port = _get_default(self._parser, 'debug', 'port', 5555, INT)
+        authkey = _get_default(self._parser, 'debug', 'authkey', 'authkey')
+
+        return debug(flag, ip, port, authkey)
+
+    @property
     def conf(self):
         conf = collections.namedtuple(
-            'conf', 'argus cloudbaseinit openstack')
-        return conf(self.argus, self.cloudbaseinit, self.openstack)
+            'conf', 'argus cloudbaseinit openstack debug')
+        return conf(self.argus, self.cloudbaseinit, self.openstack, self.debug)

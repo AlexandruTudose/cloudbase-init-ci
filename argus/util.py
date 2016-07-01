@@ -28,6 +28,7 @@ import sys
 import six
 
 from argus import config
+from argus.debug import debugger
 
 
 RETRY_COUNT = 15
@@ -178,7 +179,8 @@ def get_config():
 
 def get_logger(name="argus",
                format_string=DEFAULT_FORMAT,
-               logging_file=DEFAULT_LOG_FILE):
+               logging_file=DEFAULT_LOG_FILE,
+               console_output=False):
     """Obtain a new logger object.
 
     The `name` parameter will be the name of the logger and `format_string`
@@ -193,7 +195,10 @@ def get_logger(name="argus",
         # then it shouldn't have any loggers
 
         if logging_file:
-            file_handler = logging.FileHandler(logging_file, delay=True)
+            if console_output:
+                file_handler = logging.StreamHandler()
+            else:
+                file_handler = logging.FileHandler(logging_file, delay=True)
             file_handler.setFormatter(formatter)
             logger.addHandler(file_handler)
 
@@ -335,3 +340,12 @@ WINDOWS_VERSION = {
         True: WINDOWS_NANO
     }
 }
+
+"""Debug section.
+
+Creates a debugging object. Using 'DEBUG' you can access any debugging
+functions that are implemented.
+"""
+DEBUG_CONFIG = get_config().debug
+DEBUG_FACTORY = debugger.Debugger(DEBUG_CONFIG, LOG)
+DEBUG = DEBUG_FACTORY.get()

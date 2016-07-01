@@ -102,8 +102,8 @@ class BaseCloudbaseinitRecipe(base.BaseRecipe):
         self.replace_install()
         self.replace_code()
         self.pre_sysprep()
-        if self._conf.argus.pause:
-            six.moves.input("Press Enter to continue...")
+
+        util.DEBUG.pause('You are before sysprep!')
 
         self.sysprep()
         self.wait_cbinit_finalization()

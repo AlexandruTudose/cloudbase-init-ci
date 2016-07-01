@@ -408,8 +408,7 @@ class CloudbaseinitImageRecipe(CloudbaseinitRecipe):
         LOG.info("Preparing already syspreped instance...")
         self.execution_prologue()
 
-        if self._conf.argus.pause:
-            six.moves.input("Press Enter to continue...")
+        util.DEBUG.pause('You are after sysprep, before cloudbase-init ends!')
 
         self.wait_cbinit_finalization()
         LOG.info("Finished preparing instance.")
